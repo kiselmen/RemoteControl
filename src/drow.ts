@@ -8,21 +8,16 @@ const drawRectangle = async (width: number, heght: number) => {
   await mouse.drag(up(heght));
 };
 
-const DrawService = async (command: DrowActions, values: number[]) => {
+const DrawService = async (action: DrowActions, values: number[]) => {
     const [width, heght] = values;
     const { x, y } = await mouse.getPosition();
 
-    if (command === DrowActions.CUBE) {
-
+    if (action === DrowActions.CUBE || action === DrowActions.RECT) {
+        
         await drawRectangle(width, heght);
-        return command;
+        return action;
 
-    } else if (command === DrowActions.RECT) {
-
-        await drawRectangle(width, heght);
-        return command;
-
-    } else if (DrowActions.CIRCLE) {
+    } else if (action === DrowActions.CIRCLE) {
 
         const cx = x - width;
         const cy = y;
@@ -38,7 +33,7 @@ const DrawService = async (command: DrowActions, values: number[]) => {
         await mouse.drag(round);
         await mouse.drag(straightTo({ x, y })); 
         
-        return command;
+        return action;
 
     } else return "";
 };
